@@ -16,7 +16,8 @@ func Resolve(host string) ([]net.IP, error) {
 	badHost := uuid.New().String()
 	badIps, err := net.LookupIP(badHost)
 	if err != nil {
-		return nil, err
+		// this DNS does not reply with a default ip address, so we can just do a simple lookup
+		return net.LookupIP(host)
 	}
 
 	bad := map[string]bool{}
